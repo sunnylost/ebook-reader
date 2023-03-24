@@ -1,0 +1,46 @@
+{
+    "name": "ebook-reader",
+    "version": "0.0.0",
+    "author": "",
+    "description": "",
+    "type": "module",
+    "license": "MIT",
+    "keywords": [
+        "chrome-extension",
+        "solid",
+        "solidjs",
+        "vite",
+        "create-chrome-ext"
+    ],
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@solidjs/meta": "^0.28.2",
+        "@solidjs/router": "^0.8.1",
+        "@zip.js/zip.js": "^2.6.81",
+        "pdfjs-dist": "^3.4.120",
+        "solid-icons": "^1.0.4",
+        "solid-js": "^1.6.15",
+        "spark-md5": "^3.0.2"
+    },
+    "devDependencies": {
+        "@crxjs/vite-plugin": "2.0.0-beta.7",
+        "@types/chrome": "^0.0.225",
+        "@types/node": "^18.15.7",
+        "autoprefixer": "^10.4.14",
+        "eslint": "^8.36.0",
+        "postcss": "^8.4.21",
+        "prettier": "^2.8.7",
+        "solid-devtools": "^0.26.0",
+        "tailwindcss": "^3.2.7",
+        "typescript": "^5.0.2",
+        "vite": "^4.2.1",
+        "vite-plugin-solid": "^2.6.1"
+    }
+}
