@@ -1,11 +1,11 @@
 import { BlobReader, BlobWriter, ZipReader } from '@zip.js/zip.js'
 import type { Entry } from '@zip.js/zip.js'
-import type { Book } from '../types'
+import type { Book } from '@/types'
+import { BookContentTypes } from '@/types'
 
 const globalDOMParser = new DOMParser()
 let rootDir
 let bookEntryMap: Map<string, Entry>
-const imageUrls = []
 
 function getEntryByNameSuffix(name: string) {
     for (let [_, entry] of bookEntryMap) {
@@ -93,7 +93,7 @@ async function parseRootFile(entry: Entry) {
         if (isCss(item)) {
             const content = await loadResource(item)
             temp.push({
-                type: 'css',
+                type: BookContentTypes.css,
                 content,
             })
         } else if (isImage(item)) {
@@ -104,7 +104,7 @@ async function parseRootFile(entry: Entry) {
 
             if (entry) {
                 temp.push({
-                    type: 'html',
+                    type: BookContentTypes.html,
                     content: entry,
                 })
             }
@@ -147,5 +147,8 @@ export async function parse(rawContent: File): Promise<Book> {
     const result = await parseRootFile(rootFileEntry)
     await reader.close()
 
-    return result
+    return {
+        isLoaded: true,
+        entries: result,
+    }
 }

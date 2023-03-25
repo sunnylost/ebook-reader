@@ -1,12 +1,8 @@
 import { For, Match, Switch } from 'solid-js'
-import { Image } from './image'
+import { BookContentEntry } from '@/types'
 
-export function Book(props: {
-    book: {
-        type: string
-        content: string
-    }[]
-}) {
+// TODO
+export function Book(props: { book: BookContentEntry[] }) {
     return (
         <div class="book px-10">
             <For each={props.book}>

@@ -1,6 +1,7 @@
-import { parse as parseEpub } from './epub/index'
-import { parse as parseMobi } from './mobi/index'
-import type { Book } from './types'
+import type { Book } from '@/types'
+import { parse as parseEpub } from './epub'
+import { parse as parseMobi } from './mobi'
+import { parse as parsePdf } from './pdf'
 
 export async function parseBook(
     name: string,
@@ -15,4 +16,12 @@ export async function parseBook(
     }
 
     throw Error('not supported yet.')
+}
+
+export const emptyBook: Book = {
+    isLoaded: false,
+    title: '',
+    author: '',
+    toc: {},
+    entries: [],
 }
