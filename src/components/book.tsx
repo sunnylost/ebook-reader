@@ -8,13 +8,16 @@ export function Book(props: {
     }[]
 }) {
     return (
-        <div class="book m-1">
+        <div class="book px-10">
             <For each={props.book}>
                 {(item) => (
                     <div class="entry-wrap">
                         <Switch>
-                            <Match when={item.type === 'image'}>
-                                <Image src={item.content}></Image>
+                            <Match when={item.type === 'css'}>
+                                <link
+                                    rel="stylesheet"
+                                    href={item.content}
+                                ></link>
                             </Match>
                             <Match when={item.type === 'html'}>
                                 <div innerHTML={item.content}></div>
