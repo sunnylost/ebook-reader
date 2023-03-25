@@ -8,26 +8,37 @@ import manifest from './src/manifest'
 
 const currentDirectory = dirname(fileURLToPath(import.meta.url))
 export default defineConfig(({ mode }) => {
+    const isBuildSite = mode === 'site'
+    const extraConfigs = isBuildSite
+        ? {}
+        : {
+              rollupOptions: {
+                  input: {
+                      welcome: 'src/chrome-addon/entries/welcome.html',
+                  },
+                  output: {
+                      chunkFileNames: 'assets/chunk-[hash].js',
+                  },
+              },
+          }
+    const plugins = [
+        isBuildSite ? null : crx({ manifest }),
+        solidPlugin(),
+    ].filter(Boolean)
+
     return {
         build: {
             emptyOutDir: true,
             outDir: 'build',
             target: 'esnext',
             polyfillDynamicImport: false,
-            rollupOptions: {
-                input: {
-                    welcome: 'src/chrome-addon/entries/welcome.html',
-                },
-                output: {
-                    chunkFileNames: 'assets/chunk-[hash].js',
-                },
-            },
+            ...extraConfigs,
         },
         resolve: {
             alias: {
                 '@': resolve(currentDirectory, 'src'),
             },
         },
-        plugins: [crx({ manifest }), solidPlugin()],
+        plugins,
     }
 })
