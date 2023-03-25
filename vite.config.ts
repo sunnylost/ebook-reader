@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => {
     ].filter(Boolean)
 
     return {
+        base: './',
         build: {
             emptyOutDir: true,
             outDir: 'build',
