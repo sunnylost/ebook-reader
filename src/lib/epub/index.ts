@@ -1,6 +1,6 @@
 import { BlobReader, BlobWriter, ZipReader } from '@zip.js/zip.js'
 import type { Entry } from '@zip.js/zip.js'
-import type { Book } from '@/types'
+import type { Book, BookContentEntry, BookContentType } from '@/types'
 import { BookContentTypes } from '@/types'
 
 const globalDOMParser = new DOMParser()
@@ -64,7 +64,11 @@ async function parseRootFilePath(): Promise<string> {
     return rootFileTag?.getAttribute('full-path') || ''
 }
 
-async function transformContent(entry: Entry, imageMap: Map<string, string>) {
+async function transformContent(
+    item: intermediateEntry,
+    imageMap: Map<string, string>
+) {
+    const entry = item.content as Entry
     const xml = await parseXML(entry)
     const links = [...xml.querySelectorAll('link, meta')]
     links.forEach((link) => {
@@ -73,56 +77,92 @@ async function transformContent(entry: Entry, imageMap: Map<string, string>) {
     const images = [...xml.querySelectorAll('img')]
 
     images.forEach((img) => {
+        const baseURL = new URL(item.href || '', img.baseURI).href
         const src = img.getAttribute('src') as string
+        const imageHref = new URL(src, baseURL).pathname
+        const matchImage = imageMap.get(imageHref)
 
-        if (imageMap.has(src)) {
-            img.setAttribute('src', imageMap.get(src) as string)
+        if (matchImage) {
+            img.setAttribute('src', matchImage as string)
         }
     })
 
-    return new XMLSerializer().serializeToString(xml.documentElement)
+    return new XMLSerializer().serializeToString(xml.documentElement) as string
+}
+
+type intermediateEntry = {
+    type: BookContentType
+    href: string | null
+    content: string | Entry
+}
+
+// TODO
+function transformPathToAbsolute(path: string) {
+    if (path[0] !== '/') {
+        return `/${path}`
+    }
+
+    return path
 }
 
 async function parseRootFile(entry: Entry) {
     const xml = await parseXML(entry)
     console.log('root file:', xml)
+    const spine = xml.querySelector('spine')?.children || []
     const children = xml.querySelector('manifest')?.children || []
-    const temp = []
+    const manifestEntryMap = new Map<string, intermediateEntry>()
     const imageMap = new Map<string, string>()
     for (let item of children) {
         if (isCss(item)) {
             const content = await loadResource(item)
-            temp.push({
+            manifestEntryMap.set(item.id, {
                 type: BookContentTypes.css,
+                href: item.getAttribute('href'),
                 content,
             })
         } else if (isImage(item)) {
             const content = await loadResource(item)
-            imageMap.set(item.getAttribute('href') as string, content)
+            imageMap.set(
+                transformPathToAbsolute(item.getAttribute('href') as string),
+                content
+            )
         } else {
             const entry = getEntryByNameSuffix(item.getAttribute('href') || '')
 
             if (entry) {
-                temp.push({
+                manifestEntryMap.set(item.id, {
                     type: BookContentTypes.html,
+                    href: item.getAttribute('href'),
                     content: entry,
                 })
             }
         }
     }
 
-    let result = []
-    for (let item of temp) {
-        if (item.type === 'html') {
+    let result: BookContentEntry[] = []
+    for (let item of spine) {
+        const idref = item.getAttribute('idref')
+
+        if (!idref) {
+            continue
+        }
+
+        const _item = manifestEntryMap.get(idref)
+
+        if (!_item) {
+            continue
+        }
+
+        if (_item.type === 'html') {
             result.push({
-                ...item,
-                content: await transformContent(
-                    item.content as Entry,
-                    imageMap
-                ),
+                type: _item.type,
+                content: await transformContent(_item, imageMap),
             })
         } else {
-            result.push(item)
+            result.push({
+                type: _item.type,
+                content: _item.content as string,
+            })
         }
     }
 
