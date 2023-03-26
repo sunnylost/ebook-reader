@@ -15,6 +15,9 @@ export interface BookContentEntry {
 
 export interface Book {
     isLoaded: boolean
+    title?: string
+    author?: string
+    toc?: any
     entries: BookContentEntry[]
 }
 

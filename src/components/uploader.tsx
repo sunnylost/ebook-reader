@@ -27,6 +27,7 @@ export function Uploader(prop) {
                 <h1 class="mb-2">
                     Welcome to Ebook Reader, select a file or drop file here
                 </h1>
+
                 <input
                     id={uploaderID}
                     type="file"
@@ -37,6 +38,12 @@ export function Uploader(prop) {
                     class="text-2xl m-auto cursor-pointer"
                     onClick={triggerUploadAction}
                 ></FaSolidUpload>
+                <a
+                    class="block mt-2 text-center underline hover:text-blue-500"
+                    href="./pdf-viewer/viewer.html"
+                >
+                    Or you can open PDF Viewer
+                </a>
             </div>
         </div>
     )

@@ -21,6 +21,7 @@ async function handleFileChange(e: InputEvent) {
     try {
         ebook = await parseBook(uploadFile.name, uploadFile)
     } catch (e: Error) {
+        console.log(e)
         updateHasError(true)
         updateErrorMsg(e.message)
         return
