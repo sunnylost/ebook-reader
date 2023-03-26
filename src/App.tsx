@@ -2,12 +2,15 @@ import { createSignal, Show } from 'solid-js'
 import { Uploader } from '@/components/uploader'
 import { parseBook, emptyBook } from '@/lib'
 import { Book as BookComponent } from './components/book'
+import { Alert } from '@/components/alert'
 import { generateFileUrl } from '@/utils'
 import { openBook } from '@/stores'
 import { Book } from '@/types'
 import { DragAndDropContextProvider } from './utils/useDragAndDrop'
 
 const [book, updateBook] = createSignal<Book>(emptyBook)
+const [hasError, updateHasError] = createSignal(false)
+const [errorMsg, updateErrorMsg] = createSignal('')
 async function handleFileChange(e: InputEvent) {
     const target = e.target as HTMLInputElement
     const uploadFile = target.files?.[0] as File
@@ -17,8 +20,9 @@ async function handleFileChange(e: InputEvent) {
 
     try {
         ebook = await parseBook(uploadFile.name, uploadFile)
-    } catch (e) {
-        console.log(e)
+    } catch (e: Error) {
+        updateHasError(true)
+        updateErrorMsg(e.message)
         return
     }
 
@@ -37,6 +41,12 @@ export default function App() {
             >
                 <BookComponent book={book()?.entries}></BookComponent>
             </Show>
+            {hasError() && (
+                <Alert
+                    msg={errorMsg()}
+                    onHide={() => updateHasError(false)}
+                ></Alert>
+            )}
         </DragAndDropContextProvider>
     )
 }

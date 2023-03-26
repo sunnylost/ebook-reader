@@ -1,0 +1,12 @@
+@keyframes slide-in-and-out {
+    0%,
+    100% {
+        transform: translateY(-100%);
+    }
+
+    30%,
+    70% {
+        opacity: 100;
+        transform: translateY(0);
+    }
+}
