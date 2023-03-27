@@ -1,10 +1,11 @@
 import { For, Match, Switch } from 'solid-js'
+import { FloatToolbar } from './float-toolbar'
 import { BookContentEntry } from '@/types'
 
 // TODO
 export function Book(props: { book: BookContentEntry[] }) {
     return (
-        <div class="book px-10">
+        <div class="book w-[1000px] m-auto px-10 bg-[#1e1818] text-white">
             <For each={props.book}>
                 {(item) => (
                     <div class="entry-wrap">
@@ -16,12 +17,16 @@ export function Book(props: { book: BookContentEntry[] }) {
                                 ></link>
                             </Match>
                             <Match when={item.type === 'html'}>
-                                <div innerHTML={item.content}></div>
+                                <div
+                                    class="text-left"
+                                    innerHTML={item.content}
+                                ></div>
                             </Match>
                         </Switch>
                     </div>
                 )}
             </For>
+            <FloatToolbar></FloatToolbar>
         </div>
     )
 }

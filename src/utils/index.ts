@@ -39,3 +39,33 @@ export async function generateFileUrl(file: File): Promise<string> {
         resolveFn = resolve
     })
 }
+
+const GLOBAL_CONFIG_KEY = 'global-config'
+
+const defaultConfig = {
+    fontSize: 14,
+}
+
+export function retrieveGlobalConfig() {
+    let savedConfig
+
+    try {
+        const savedData = window.localStorage.getItem(GLOBAL_CONFIG_KEY)
+        savedConfig = savedData ? JSON.parse(savedData) : {}
+    } catch {
+        savedConfig = {}
+    }
+
+    return {
+        ...defaultConfig,
+        ...savedConfig,
+    }
+}
+
+export function backupGlobalConfig(config: any) {
+    try {
+        window.localStorage.setItem(GLOBAL_CONFIG_KEY, JSON.stringify(config))
+    } catch {
+        window.localStorage.setItem(GLOBAL_CONFIG_KEY, JSON.stringify({}))
+    }
+}

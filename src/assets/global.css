@@ -5,9 +5,9 @@
 html,
 body,
 #app {
-    height: 100%;
+    @apply w-full h-full overflow-auto bg-[#2D2727] text-white;
 }
 
 pre {
-    white-space: pre-line;
+    @apply whitespace-pre-wrap;
 }
