@@ -74,16 +74,18 @@ async function transformContent(
     links.forEach((link) => {
         link.remove()
     })
-    const images = [...xml.querySelectorAll('img')]
+    const images = [...xml.querySelectorAll('img, image')]
 
     images.forEach((img) => {
+        const attributeName =
+            img.tagName.toLowerCase() === 'image' ? 'xlink:href' : 'src'
         const baseURL = new URL(item.href || '', img.baseURI).href
-        const src = img.getAttribute('src') as string
+        const src = img.getAttribute(attributeName) as string
         const imageHref = new URL(src, baseURL).pathname
         const matchImage = imageMap.get(imageHref)
 
         if (matchImage) {
-            img.setAttribute('src', matchImage as string)
+            img.setAttribute(attributeName, matchImage as string)
         }
     })
 
