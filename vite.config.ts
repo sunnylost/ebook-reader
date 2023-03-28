@@ -31,8 +31,18 @@ export default defineConfig(({ mode }) => {
         build: {
             emptyOutDir: true,
             outDir: 'build',
-            target: 'esnext',
             polyfillDynamicImport: false,
+            sourcemap: true,
+            target: 'esnext',
+            rollupOptions: {
+                output: {
+                    manualChunks: (id) => {
+                        if (id.includes('node_modules')) {
+                            return 'vendor'
+                        }
+                    },
+                },
+            },
             ...extraConfigs,
         },
         resolve: {
