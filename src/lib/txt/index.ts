@@ -1,6 +1,6 @@
-import { BookContentTypes } from '@/types'
+import { Book, BookContentTypes } from '@/types'
 
-export async function parse(rawContent: File) {
+export async function parse(rawContent: File): Promise<Book> {
     return new Promise((resolve) => {
         const reader = new FileReader()
         reader.onload = () => {
