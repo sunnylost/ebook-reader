@@ -98,11 +98,8 @@ type intermediateEntry = {
 
 // TODO
 function transformPathToAbsolute(path: string) {
-    if (path[0] !== '/') {
-        return `/${path}`
-    }
-
-    return path
+    const baseURL = new URL(path, location.href).href
+    return new URL(path, baseURL).pathname
 }
 
 async function parseRootFile(entry: Entry) {
