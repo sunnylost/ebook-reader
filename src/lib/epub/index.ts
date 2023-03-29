@@ -49,7 +49,23 @@ async function parseXML(entry: Entry) {
     const text = await getEntryContent(entry)
     return globalDOMParser.parseFromString(text, 'text/xml')
 }
-function generateTOC() {}
+async function generateTOC(xml: Document) {
+    const ncx = xml.querySelector('#ncx')
+
+    if (!ncx) {
+        return []
+    }
+    const href = ncx.getAttribute('href') || ''
+
+    const entry = getEntryByNameSuffix(href)
+    console.log('toc', entry)
+
+    if (entry) {
+        const xml = await parseXML(entry)
+        console.log('toc result', xml)
+        return xml.querySelector('nav')?.innerHTML || ''
+    }
+}
 
 async function parseRootFilePath(): Promise<string> {
     const containerXML = bookEntryMap.get('META-INF/container.xml')
@@ -107,6 +123,7 @@ function transformPathToAbsolute(path: string) {
 async function parseRootFile(entry: Entry) {
     const xml = await parseXML(entry)
     console.log('root file:', xml)
+    const toc = await generateTOC(xml)
     const spine = xml.querySelector('spine')?.children || []
     const children = xml.querySelector('manifest')?.children || []
     const manifestEntryMap = new Map<string, intermediateEntry>()
@@ -165,7 +182,10 @@ async function parseRootFile(entry: Entry) {
         }
     }
 
-    return result
+    return {
+        toc,
+        result,
+    }
 }
 
 export async function parse(rawContent: File): Promise<Book> {
@@ -183,11 +203,12 @@ export async function parse(rawContent: File): Promise<Book> {
         throw Error('invalid format, cannot find container.xml')
     }
 
-    const result = await parseRootFile(rootFileEntry)
+    const { toc, result } = await parseRootFile(rootFileEntry)
     await reader.close()
 
     return {
         isLoaded: true,
+        toc,
         entries: result,
     }
 }

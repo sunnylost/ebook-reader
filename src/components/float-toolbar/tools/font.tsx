@@ -3,7 +3,7 @@ import { createSignal, Show } from 'solid-js'
 import _clickOutside from '@/directives/clickOutside'
 import { getGlobalFont, updateGlobalFont } from '@/stores'
 
-export function FontTool() {
+export function Font() {
     const [isShow, updateIsShow] = createSignal(false)
     const [fontSize, updateFontSize] = createSignal(getGlobalFont())
     // solid's directive needs to do this
@@ -17,7 +17,7 @@ export function FontTool() {
 
     return (
         <div
-            class="flex items-start fixed top-1/2 right-[calc(50vw_-_570px)] bg-primary transition-all rounded"
+            class="flex items-start bg-primary transition-all rounded"
             use:clickOutside={() => updateIsShow(false)}
         >
             <Show when={isShow()}>

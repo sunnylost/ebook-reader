@@ -40,7 +40,7 @@ export default function App() {
                 fallback={<Uploader onChange={handleFileChange}></Uploader>}
                 keyed
             >
-                <BookComponent book={book()?.entries}></BookComponent>
+                <BookComponent book={book()}></BookComponent>
             </Show>
             {hasError() && (
                 <Alert

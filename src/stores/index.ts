@@ -49,3 +49,17 @@ const [state, setState] = createStore<BookStore>({
 export function openBook(bookId: string, book: Book) {
     setState('book', book)
 }
+
+const [tocOpenedState, updateTocOpenedState] = createStore({
+    isOpened: false,
+})
+
+export function toggleToc() {
+    updateTocOpenedState({
+        isOpened: !tocOpenedState.isOpened,
+    })
+}
+
+export function getTocState() {
+    return tocOpenedState.isOpened
+}
