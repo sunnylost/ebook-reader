@@ -17,11 +17,11 @@ export async function parseBook(
 ): Promise<Book> | never {
     const matches = name.match(/\.[^.]+$/)
 
-    if (!matches || !handler[matches[0]]) {
+    if (!matches || !handler[matches[0].toLowerCase()]) {
         throw new Error('not supported yet.')
     }
 
-    return await handler[matches[0]](content)
+    return await handler[matches[0].toLowerCase()](content)
 }
 
 export const emptyBook: Book = {
