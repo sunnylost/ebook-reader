@@ -22,12 +22,12 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@solidjs/meta": "^0.28.2",
+        "@solidjs/meta": "^0.28.3",
         "@solidjs/router": "^0.8.2",
         "@zip.js/zip.js": "^2.6.83",
         "pdfjs-dist": "^3.4.120",
         "solid-icons": "^1.0.4",
-        "solid-js": "^1.6.16",
+        "solid-js": "^1.7.0",
         "spark-md5": "^3.0.2"
     },
     "devDependencies": {
@@ -39,8 +39,8 @@
         "postcss": "^8.4.21",
         "prettier": "^2.8.7",
         "solid-devtools": "^0.26.0",
-        "tailwindcss": "^3.3.0",
-        "typescript": "^5.0.2",
+        "tailwindcss": "^3.3.1",
+        "typescript": "^5.0.3",
         "vite": "^4.2.1",
         "vite-plugin-solid": "^2.6.1"
     }
