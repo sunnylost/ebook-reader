@@ -22,17 +22,14 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@solidjs/meta": "^0.28.3",
         "@solidjs/router": "^0.8.2",
         "@zip.js/zip.js": "^2.6.83",
-        "pdfjs-dist": "^3.4.120",
+        "pdfjs-dist": "^3.5.141",
         "solid-icons": "^1.0.4",
-        "solid-js": "^1.7.0",
+        "solid-js": "^1.7.1",
         "spark-md5": "^3.0.2"
     },
     "devDependencies": {
-        "@crxjs/vite-plugin": "2.0.0-beta.7",
-        "@types/chrome": "^0.0.227",
         "@types/node": "^18.15.11",
         "autoprefixer": "^10.4.14",
         "eslint": "^8.37.0",

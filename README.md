@@ -1,3 +1,3 @@
 # EBook Reader
 
-a Chrome addon for read ebook.
+An online ebook reader.
