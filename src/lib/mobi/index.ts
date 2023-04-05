@@ -3,9 +3,10 @@
  * https://wiki.mobileread.com/wiki/MOBI
  */
 
-import type { Book } from '@/types'
+import type { Book, BookContentEntry } from '@/types'
 import { PDBHeader, PalmHeader, MobiHeader } from './types'
 import { BookContentTypes } from '@/types'
+import { readFileContent } from '@/utils'
 
 class MobiFile {
     pdbHeader: PDBHeader
@@ -273,30 +274,26 @@ function parseMobiFile() {
     // console.log('mobi file structure', mobi)
 }
 export async function parse(rawContent: File): Promise<Book> {
-    return new Promise((resolve) => {
+    const result = await readFileContent(rawContent)
+    let entries: BookContentEntry[]
+
+    if (result.isOK) {
         mobi = new MobiFile()
-        const reader = new FileReader()
-        reader.onload = (e) => {
-            const data = e.target?.result
+        dataView = new DataView(result.content as ArrayBuffer)
+        const content = parseMobiFile()
 
-            if (!data) {
-                console.log('empty')
-                return
-            }
+        entries = [
+            {
+                type: BookContentTypes.html,
+                content,
+            },
+        ]
+    } else {
+        entries = []
+    }
 
-            dataView = new DataView(data as ArrayBuffer)
-            const content = parseMobiFile()
-
-            resolve({
-                isLoaded: true,
-                entries: [
-                    {
-                        type: BookContentTypes.html,
-                        content,
-                    },
-                ],
-            })
-        }
-        reader.readAsArrayBuffer(rawContent)
-    })
+    return {
+        isLoaded: true,
+        entries,
+    }
 }

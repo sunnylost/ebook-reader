@@ -9,14 +9,15 @@ export async function parse(rawContent: File): Promise<Book> {
         entries:
             !result.isOK || !result.content
                 ? []
-                : result.content
-                      .toString()
-                      .split('\n')
-                      .map((line) => {
-                          return {
-                              type: BookContentTypes.html,
-                              content: `<p>${line}</p>`,
-                          }
-                      }),
+                : [
+                      {
+                          type: BookContentTypes.html,
+                          content: result.content
+                              .toString()
+                              .split('\n')
+                              .map((line) => `<p>${line}</p>`)
+                              .join(''),
+                      },
+                  ],
     }
 }
