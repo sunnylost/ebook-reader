@@ -69,3 +69,34 @@ export function backupGlobalConfig(config: any) {
         window.localStorage.setItem(GLOBAL_CONFIG_KEY, JSON.stringify({}))
     }
 }
+
+export function readFileContent(
+    f: File,
+    type = 'blob'
+): Promise<{
+    isOK: boolean
+    content: string | ArrayBuffer | null
+}> {
+    return new Promise((resolve) => {
+        const fileReader = new FileReader()
+        fileReader.onload = () => {
+            resolve({
+                isOK: true,
+                content: fileReader.result,
+            })
+        }
+
+        fileReader.onerror = (e) => {
+            resolve({
+                isOK: false,
+                content: null,
+            })
+        }
+
+        if (type === 'text') {
+            fileReader.readAsText(f, 'utf-8')
+        } else {
+            fileReader.readAsArrayBuffer(f)
+        }
+    })
+}
