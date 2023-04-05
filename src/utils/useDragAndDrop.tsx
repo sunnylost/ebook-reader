@@ -14,7 +14,6 @@ export function DragAndDropContextProvider(props) {
     const [getDragEvent, setDragEvent] = createSignal<DragEvent | null>(null)
 
     onMount(() => {
-        console.log(wrapperRef)
         wrapperRef.addEventListener('dragenter', () => {
             console.log('file!')
         })

@@ -36,11 +36,6 @@ export const [bookState, updateBookState] = createStore<BookStore>({
     },
 
     get currentPageContent() {
-        console.log(
-            this.currentOpenedBook?.entries,
-            this.currentPageNum,
-            this.totalPageNum
-        )
         return this.currentOpenedBook?.entries[this.currentPageNum]
     },
 })
@@ -64,6 +59,7 @@ export async function openBook(event: Event) {
         })
     } catch (e) {
         console.log(e)
+
         if (e instanceof Error) {
             updateBookState({
                 status: BOOK_STATUS.error,
