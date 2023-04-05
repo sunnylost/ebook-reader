@@ -1,53 +1,40 @@
-import { createSignal, Show } from 'solid-js'
+import { Match, Show, Switch } from 'solid-js'
 import { Uploader } from '@/components/uploader'
-import { parseBook, emptyBook } from '@/lib'
 import { Book as BookComponent } from './components/book'
 import { Alert } from '@/components/alert'
-import { generateFileUrl } from '@/utils'
-import { openBook } from '@/stores'
-import { Book } from '@/types'
+import { openBook, bookState, BOOK_STATUS, resetBookState } from '@/stores/book'
 import { DragAndDropContextProvider } from './utils/useDragAndDrop'
-
-const [book, updateBook] = createSignal<Book>(emptyBook)
-const [hasError, updateHasError] = createSignal(false)
-const [errorMsg, updateErrorMsg] = createSignal('')
-async function handleFileChange(e: InputEvent) {
-    const target = e.target as HTMLInputElement
-    const uploadFile = target.files?.[0] as File
-    const bookId = await generateFileUrl(uploadFile)
-
-    let ebook: Book
-
-    try {
-        ebook = await parseBook(uploadFile.name, uploadFile)
-    } catch (e: Error) {
-        console.log(e)
-        updateHasError(true)
-        updateErrorMsg(e.message)
-        return
-    }
-
-    console.log('Ebook', ebook)
-    openBook(bookId, ebook)
-    updateBook(ebook)
-}
+import { LoadingStatus } from '@/components/loading-status'
 
 export default function App() {
     return (
         <DragAndDropContextProvider>
-            <Show
-                when={book()?.isLoaded}
-                fallback={<Uploader onChange={handleFileChange}></Uploader>}
-                keyed
-            >
-                <BookComponent book={book()}></BookComponent>
-            </Show>
-            {hasError() && (
-                <Alert
-                    msg={errorMsg()}
-                    onHide={() => updateHasError(false)}
-                ></Alert>
-            )}
+            <Switch>
+                <Match
+                    when={
+                        bookState.status === BOOK_STATUS.init ||
+                        bookState.status === BOOK_STATUS.loading ||
+                        bookState.status === BOOK_STATUS.error
+                    }
+                >
+                    <Uploader onChange={(e) => openBook(e)}></Uploader>
+                    <Show when={bookState.status === BOOK_STATUS.loading}>
+                        <LoadingStatus></LoadingStatus>
+                    </Show>
+                    <Show when={bookState.status === BOOK_STATUS.error}>
+                        <Alert
+                            msg={bookState.error}
+                            onHide={() => resetBookState()}
+                        ></Alert>
+                    </Show>
+                </Match>
+
+                <Match when={bookState.status === BOOK_STATUS.done}>
+                    <BookComponent
+                        book={bookState.currentOpenedBook}
+                    ></BookComponent>
+                </Match>
+            </Switch>
         </DragAndDropContextProvider>
     )
 }

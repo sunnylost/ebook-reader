@@ -8,7 +8,9 @@ function triggerUploadAction() {
     document.getElementById(uploaderID)?.click()
 }
 
-export function Uploader(prop) {
+export function Uploader(prop: {
+    onChange: (e: Event & { currentTarget: HTMLInputElement }) => void
+}) {
     const [getDragEvent] = useDragAndDrop()
 
     createEffect(() => {

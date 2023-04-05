@@ -1,5 +1,4 @@
 import { createStore } from 'solid-js/store'
-import { Book, BookStore } from '@/types'
 import { backupGlobalConfig, retrieveGlobalConfig } from '@/utils'
 
 type GlobalConfig = {
@@ -39,15 +38,6 @@ export function updateGlobalFont(font: number) {
         generateStyle(globalConfig)
         backupGlobalConfig(globalConfig)
     }, 10)
-}
-
-// TODO
-const [state, setState] = createStore<BookStore>({
-    book: null,
-})
-
-export function openBook(bookId: string, book: Book) {
-    setState('book', book)
 }
 
 const [tocOpenedState, updateTocOpenedState] = createStore({

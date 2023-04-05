@@ -4,7 +4,7 @@ import { Toc } from './toc'
 import { Book as BookType } from '@/types'
 
 // TODO
-export function Book(props: { book: BookType }) {
+export function Book(props: { book: BookType | null }) {
     return (
         <div class="book relative w-[1000px] m-auto px-10 bg-[#1e1818] text-white">
             <div class="book-content">
