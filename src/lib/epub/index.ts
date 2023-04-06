@@ -60,10 +60,31 @@ async function generateTOC(xml: Document) {
     const entry = getEntryByNameSuffix(href)
     console.log('toc', entry)
 
-    if (entry) {
-        const xml = await parseXML(entry)
-        console.log('toc result', xml)
-        return xml.querySelector('nav')?.innerHTML || ''
+    if (!entry) {
+        return ''
+    }
+
+    const content = await parseXML(entry)
+
+    const navMap = content.querySelector('navMap')
+
+    if (navMap) {
+        const tocArray = []
+        for (const nav of navMap.children) {
+            const labelEl = nav.querySelector('navLabel text')
+            const contentEl = nav.querySelector('content')
+            tocArray.push(
+                `<li><a data-index="${
+                    tocArray.length
+                }" href="${contentEl?.getAttribute('src')}">${
+                    labelEl?.innerHTML
+                }</a></li>`
+            )
+        }
+
+        return `<ol>${tocArray.join('')}</ol>`
+    } else {
+        return content.querySelector('nav')?.innerHTML || ''
     }
 }
 

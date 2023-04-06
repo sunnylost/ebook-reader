@@ -93,3 +93,15 @@ export function prevPage() {
         })
     }
 }
+
+export function jumpToPage(num: number) {
+    if (num === bookState.currentPageNum) {
+        return
+    }
+
+    if (num >= 0 && num < bookState.totalPageNum) {
+        return updateBookState({
+            currentPageNum: num,
+        })
+    }
+}

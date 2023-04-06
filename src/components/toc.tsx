@@ -1,5 +1,6 @@
-import { getTocState } from '@/stores'
 import { createEffect, createSignal, Show } from 'solid-js'
+import { getTocState } from '@/stores'
+import { jumpToPage } from '@/stores/book'
 
 export function Toc(props: { content: string }) {
     const [isVisible, updateVisible] = createSignal(false)
@@ -8,7 +9,7 @@ export function Toc(props: { content: string }) {
         updateVisible(getTocState())
     })
 
-    function handleClick(e: Event) {
+    async function handleClick(e: Event) {
         e.stopPropagation()
         e.preventDefault()
 
@@ -18,7 +19,15 @@ export function Toc(props: { content: string }) {
         ) {
             const href =
                 (e.target as HTMLAnchorElement).getAttribute('href') || ''
+            const pageNum = Number.parseInt(
+                (e.target as HTMLAnchorElement).dataset?.index || '',
+                10
+            )
             const url = new URL(href, location.href)
+
+            if (!Number.isNaN(pageNum)) {
+                await jumpToPage(pageNum)
+            }
 
             if (url.hash) {
                 const matchedElement = document.querySelector(
