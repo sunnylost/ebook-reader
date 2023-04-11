@@ -5,5 +5,5 @@
         "moduleResolution": "Node",
         "jsx": "preserve"
     },
-    "include": ["vite.config.ts", "src/manifest.tsx"]
+    "include": ["vite.config.ts"]
 }
