@@ -3,7 +3,8 @@ import { Dynamic } from 'solid-js/web'
 import { BsPcDisplayHorizontal, BsMoon, BsSun } from 'solid-icons/bs'
 import { globalConfig, updateGlobalConfig } from '@/stores'
 import { Mode as ModeList, ModeType } from '@/types'
-import { capitalize, getCurrentSystemColorScheme } from '@/utils'
+import { capitalize } from '@/utils'
+import { getCurrentSystemColorScheme } from '@/utils/color'
 import _clickOutside from '@/directives/clickOutside'
 
 const iconMap: Record<ModeType, Component> = {

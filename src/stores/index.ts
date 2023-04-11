@@ -1,4 +1,4 @@
-import { createEffect, observable } from 'solid-js'
+import { createEffect } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { backupGlobalConfig, retrieveGlobalConfig } from '@/utils'
 import { GlobalConfig } from '@/types'

@@ -1,7 +1,11 @@
 // @ts-ignore
 import SparkMD5 from 'spark-md5'
-import { globalConfig, updateGlobalConfig } from '@/stores'
+
 import { GlobalConfig, Mode } from '@/types'
+import {
+    getCurrentSystemColorScheme,
+    monitorSystemColorSchemeChange,
+} from './color'
 
 // https://github.com/satazor/js-spark-md5
 export async function generateFileUrl(file: File): Promise<string> {
@@ -104,24 +108,6 @@ export function readFileContent(
             fileReader.readAsArrayBuffer(f)
         }
     })
-}
-
-export function monitorSystemColorSchemeChange() {
-    window
-        .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', ({ matches }) => {
-            if (globalConfig.mode === Mode.system) {
-                updateGlobalConfig({
-                    currentColorScheme: matches ? Mode.dark : Mode.light,
-                })
-            }
-        })
-}
-
-export function getCurrentSystemColorScheme() {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? Mode.dark
-        : Mode.light
 }
 
 export function capitalize(str: string) {
