@@ -1,7 +1,8 @@
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
-import solidPlugin from 'vite-plugin-solid'
+import devtools from 'solid-devtools/vite'
+import solid from 'vite-plugin-solid'
 
 const currentDirectory = dirname(fileURLToPath(import.meta.url))
 export default defineConfig(({ mode }) => {
@@ -28,6 +29,11 @@ export default defineConfig(({ mode }) => {
                 '@': resolve(currentDirectory, 'src'),
             },
         },
-        plugins: [solidPlugin()],
+        plugins: [
+            devtools({
+                autoname: true,
+            }),
+            solid(),
+        ],
     }
 })
