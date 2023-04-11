@@ -1,6 +1,7 @@
 import { Match, Show, Switch } from 'solid-js'
 import { Uploader } from '@/components/uploader'
-import { Book as BookComponent } from './components/book'
+import { Book as BookComponent } from '@/components/book'
+import { TopBar } from '@/components/top-bar'
 import { Alert } from '@/components/alert'
 import { openBook, bookState, BOOK_STATUS, resetBookState } from '@/stores/book'
 import { DragAndDropContextProvider } from './utils/useDragAndDrop'
@@ -9,6 +10,7 @@ import { LoadingStatus } from '@/components/loading-status'
 export default function App() {
     return (
         <DragAndDropContextProvider>
+            <TopBar></TopBar>
             <Switch>
                 <Match
                     when={

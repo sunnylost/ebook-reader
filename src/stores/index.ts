@@ -1,14 +1,19 @@
+import { createEffect, observable } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { backupGlobalConfig, retrieveGlobalConfig } from '@/utils'
+import { GlobalConfig } from '@/types'
 
-type GlobalConfig = {
-    fontSize: number
-}
-const [globalConfig, setGlobalConfig] = createStore<GlobalConfig>(
+export const [globalConfig, updateGlobalConfig] = createStore<GlobalConfig>(
     retrieveGlobalConfig()
 )
+
 const styleElement = document.createElement('style')
 document.body.appendChild(styleElement)
+
+createEffect(() => {
+    generateStyle(globalConfig)
+    backupGlobalConfig(globalConfig)
+})
 
 function generateStyle(globalConfig: GlobalConfig) {
     if (!globalConfig) {
@@ -29,15 +34,10 @@ export function getGlobalFont() {
 }
 
 export function updateGlobalFont(font: number) {
-    setGlobalConfig({
+    updateGlobalConfig({
         ...globalConfig,
         fontSize: font,
     })
-
-    setTimeout(() => {
-        generateStyle(globalConfig)
-        backupGlobalConfig(globalConfig)
-    }, 10)
 }
 
 const [tocOpenedState, updateTocOpenedState] = createStore({
@@ -53,3 +53,5 @@ export function toggleToc() {
 export function getTocState() {
     return tocOpenedState.isOpened
 }
+
+export function handleGlobalClick() {}

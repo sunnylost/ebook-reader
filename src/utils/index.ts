@@ -1,5 +1,7 @@
 // @ts-ignore
 import SparkMD5 from 'spark-md5'
+import { globalConfig, updateGlobalConfig } from '@/stores'
+import { GlobalConfig, Mode } from '@/types'
 
 // https://github.com/satazor/js-spark-md5
 export async function generateFileUrl(file: File): Promise<string> {
@@ -42,8 +44,10 @@ export async function generateFileUrl(file: File): Promise<string> {
 
 const GLOBAL_CONFIG_KEY = 'global-config'
 
-const defaultConfig = {
+const defaultConfig: GlobalConfig = {
     fontSize: 14,
+    mode: Mode.system,
+    currentColorScheme: getCurrentSystemColorScheme(),
 }
 
 export function retrieveGlobalConfig() {
@@ -52,6 +56,7 @@ export function retrieveGlobalConfig() {
     try {
         const savedData = window.localStorage.getItem(GLOBAL_CONFIG_KEY)
         savedConfig = savedData ? JSON.parse(savedData) : {}
+        monitorSystemColorSchemeChange()
     } catch {
         savedConfig = {}
     }
@@ -99,4 +104,26 @@ export function readFileContent(
             fileReader.readAsArrayBuffer(f)
         }
     })
+}
+
+export function monitorSystemColorSchemeChange() {
+    window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', ({ matches }) => {
+            if (globalConfig.mode === Mode.system) {
+                updateGlobalConfig({
+                    currentColorScheme: matches ? Mode.dark : Mode.light,
+                })
+            }
+        })
+}
+
+export function getCurrentSystemColorScheme() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? Mode.dark
+        : Mode.light
+}
+
+export function capitalize(str: string) {
+    return `${str[0].toUpperCase()}${str.substring(1)}`
 }
