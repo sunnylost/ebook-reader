@@ -40,17 +40,14 @@ export const [bookState, updateBookState] = createStore<BookStore>({
     },
 })
 
-export async function openBook(event: Event) {
+export async function openBook(file: File) {
     try {
-        const target = event.target as HTMLInputElement
-        const uploadFile = target.files?.[0] as File
-
         updateBookState({
             status: BOOK_STATUS.loading,
         })
         // const bookId = await generateFileUrl(uploadFile)
 
-        const book = await parseBook(uploadFile.name, uploadFile)
+        const book = await parseBook(file.name, file)
         updateBookState({
             status: BOOK_STATUS.done,
             currentPageNum: 0,

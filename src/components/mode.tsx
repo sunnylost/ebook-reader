@@ -52,14 +52,16 @@ export function Mode() {
         <div class="relative mr-10" use:clickOutside={() => handleClick(false)}>
             <div class="p-4 cursor-pointer" onclick={() => handleClick()}>
                 <Dynamic
-                    class=" w-18 h-18"
                     component={iconMap[globalConfig.mode]}
+                    {...{
+                        class: 'w-18 h-18',
+                    }}
                 ></Dynamic>
             </div>
             <Show when={isShow()}>
                 <ul class="absolute top-24 right-0 bg-dark-bg text-dark-text dark:bg-bg dark:text-text rounded">
                     <For each={Object.values(ModeList)}>
-                        {(item, key) => (
+                        {(item) => (
                             <li
                                 class={[
                                     'px-8 py-4 flex items-center gap-4 cursor-pointer hover:bg-bg hover:text-text hover:dark:bg-dark-bg hover:dark:text-dark-text',

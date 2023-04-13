@@ -4,7 +4,7 @@ import { Book as BookComponent } from '@/components/book'
 import { TopBar } from '@/components/top-bar'
 import { Alert } from '@/components/alert'
 import { openBook, bookState, BOOK_STATUS, resetBookState } from '@/stores/book'
-import { DragAndDropContextProvider } from './utils/useDragAndDrop'
+import { DragAndDropContextProvider } from './components/useDragAndDrop'
 import { LoadingStatus } from '@/components/loading-status'
 
 export default function App() {

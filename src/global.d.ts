@@ -1,3 +1,11 @@
-/// <reference types="vite/client" />
+/// <reference types="vite/client"
 
-declare const __APP_VERSION__: string
+import type { JSX } from 'solid-js'
+
+declare module 'solid-js' {
+    namespace JSX {
+        interface Directives {
+            clickOutside: () => void
+        }
+    }
+}

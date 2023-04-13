@@ -1,6 +1,6 @@
 import { createEffect } from 'solid-js'
 import { FaSolidUpload } from 'solid-icons/fa'
-import { useDragAndDrop } from '@/utils/useDragAndDrop'
+import { useDragAndDrop } from '@/components/useDragAndDrop'
 
 const uploaderID = 'upload-input'
 let dragAreaRef: HTMLDivElement
@@ -8,19 +8,24 @@ function triggerUploadAction() {
     document.getElementById(uploaderID)?.click()
 }
 
-export function Uploader(prop: {
-    onChange: (e: Event & { currentTarget: HTMLInputElement }) => void
-}) {
-    const [getDragEvent] = useDragAndDrop()
+export function Uploader(prop: { onChange: (f: File) => void }) {
+    const [getFile] = useDragAndDrop()
+
+    function handleChangeEvent(
+        e: Event & { currentTarget: HTMLInputElement; target: HTMLInputElement }
+    ) {
+        const target = e.target as HTMLInputElement
+        prop.onChange(target.files?.[0] as File)
+    }
 
     createEffect(() => {
-        let e = getDragEvent()
+        let file = getFile()
 
-        if (!e) {
+        if (!file) {
             return
         }
 
-        prop.onChange(e)
+        prop.onChange(file)
     })
 
     return (
@@ -34,7 +39,7 @@ export function Uploader(prop: {
                     id={uploaderID}
                     type="file"
                     class="hidden"
-                    onChange={(e) => prop.onChange(e)}
+                    onChange={(e) => handleChangeEvent(e)}
                 />
                 <FaSolidUpload
                     class="text-2xl m-auto cursor-pointer"
