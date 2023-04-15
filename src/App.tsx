@@ -1,6 +1,6 @@
 import { Match, Show, Switch } from 'solid-js'
 import { Uploader } from '@/components/uploader'
-import { Book as BookComponent } from '@/components/book'
+import { Reader } from '@/components/reader'
 import { TopBar } from '@/components/top-bar'
 import { Alert } from '@/components/alert'
 import { openBook, bookState, BOOK_STATUS, resetBookState } from '@/stores/book'
@@ -32,9 +32,7 @@ export default function App() {
                 </Match>
 
                 <Match when={bookState.status === BOOK_STATUS.done}>
-                    <BookComponent
-                        book={bookState.currentOpenedBook}
-                    ></BookComponent>
+                    <Reader></Reader>
                 </Match>
             </Switch>
         </DragAndDropContextProvider>
