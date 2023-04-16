@@ -4,14 +4,16 @@
  */
 
 import type { Book, BookContentEntry } from '@/types'
-import { PDBHeader, PalmHeader, MobiHeader } from './types'
+import { PDBHeader, PalmHeader, MobiHeader, EXTHHeader } from './types'
 import { BookContentTypes } from '@/types'
 import { readFileContent } from '@/utils'
+import { parseHTML, parseXML } from '@/lib/util'
 
 class MobiFile {
     pdbHeader: PDBHeader
     palmHeader: PalmHeader
     header: MobiHeader
+    exthHeader: EXTHHeader
     records: {
         offset: number
         attr: number
@@ -21,6 +23,7 @@ class MobiFile {
         this.pdbHeader = {} as PDBHeader
         this.palmHeader = {} as PalmHeader
         this.header = {} as MobiHeader
+        this.exthHeader = {} as EXTHHeader
     }
 }
 
@@ -29,6 +32,7 @@ const decoder = new TextDecoder('utf-8')
 let offset = 0
 let dataView: DataView
 let fileTitle: string
+let images: string[] = []
 
 function jumpTo(_offset: number) {
     offset = _offset
@@ -187,6 +191,8 @@ function parseMobiHeader() {
     header.firstContentRecordNumber = readBytes(2)
     header.lastContentRecordNumber = readBytes(2)
     skip(4)
+    header.fcisRecordNumber = readBytes(4)
+    header.unknownFcisRecordCount = readBytes(4)
     header.flisRecordNumber = readBytes(4)
     header.unknownFlisRecordCount = readBytes(4)
     skip(8)
@@ -194,9 +200,38 @@ function parseMobiHeader() {
     header.firstCompilationDataSectionCount = readBytes(4)
     header.numberOfCompilationDataSections = readBytes(4)
     skip(4)
+    console.log(new Uint8Array(dataView.buffer.slice(offset, offset + 4)))
     header.extraRecordDataFlags = readBytes(4)
     header.indxRecordOffset = readBytes(4)
     jumpTo(_offset + header.headerLength)
+}
+
+const exthHeaderMap: Record<string, [string, 'number' | 'string']> = {
+    1: ['drm_server_id', 'string'],
+    2: ['drm_commerce_id', 'string'],
+    3: ['drm_ebookbase_book_id', 'string'],
+    100: ['author', 'string'],
+    101: ['publisher', 'string'],
+    102: ['imprint', 'string'],
+    103: ['description', 'string'],
+    104: ['isbn', 'string'],
+    105: ['subject', 'string'],
+    106: ['publishingdate', 'string'],
+    107: ['review', 'string'],
+    108: ['contributor', 'string'],
+    109: ['rights', 'string'],
+    110: ['subjectcode', 'string'],
+    111: ['type', 'string'],
+    112: ['source', 'string'],
+    113: ['asin', 'string'],
+    114: ['versionnumber', 'string'],
+    115: ['sample', 'string'],
+    116: ['startreading', 'number'],
+    117: ['adult', 'string'],
+    118: ['retail price', 'string'],
+    // ...
+    201: ['coveroffset', 'number'],
+    202: ['thumboffset', 'number'],
 }
 
 // skip
@@ -207,25 +242,33 @@ function parseExthHeader() {
 
     const _offset = offset
     readString(4)
+
     const headerLength = readBytes(4)
-    // console.log('exth header length', headerLength)
     let count = readBytes(4)
-    // console.log('record count', count)
+
+    const { exthHeader } = mobi
 
     while (count--) {
-        // console.log('record type', readBytes(4))
-        readBytes(4)
+        const type = readBytes(4)
         const recordLength = readBytes(4)
-        // console.log('record length', recordLength)
-        // console.log('record data', readString(recordLength - 8))
-        readString(recordLength - 8)
+        const match = exthHeaderMap[type]
+
+        if (match) {
+            if (match[1] === 'string') {
+                exthHeader[match[0]] = readString(recordLength - 8)
+            } else {
+                exthHeader[match[0]] = readBytes(recordLength - 8)
+            }
+        } else {
+            readString(recordLength - 8)
+        }
     }
 
     jumpTo(_offset + headerLength)
 }
 
 function parseRecords() {
-    const { palmHeader, records } = mobi
+    const { header, palmHeader, records } = mobi
     const text: Uint8Array[] = []
     let totalLength = 0
     for (let i = 1; i <= palmHeader.recordCount; i++) {
@@ -243,9 +286,25 @@ function parseRecords() {
         }
     }
 
+    if (header.firstImageIndex && header.lastContentRecordNumber) {
+        for (
+            let i = header.firstImageIndex;
+            i <= header.lastContentRecordNumber;
+            i++
+        ) {
+            const begin = records[i].offset
+            const end = records[i + 1].offset
+            const data = new Uint8Array(dataView.buffer.slice(begin, end))
+            images.push(
+                URL.createObjectURL(new Blob([data], { type: 'image/png' }))
+            )
+        }
+    }
+
     const combinedTextArray = new Uint8Array(totalLength)
     let index = 0
     text.forEach((fragment) => {
+        // console.log(new TextDecoder('utf-8').decode(fragment))
         combinedTextArray.set(fragment, index)
         index += fragment.length
     })
@@ -269,18 +328,37 @@ function parseMobiFile() {
     parseMobiHeader()
     parseExthHeader()
     getRemainderOfRecord0()
+    console.log(mobi)
     return parseRecords()
 
     // console.log('mobi file structure', mobi)
 }
+
+function fixImage(text: string) {
+    const doc = parseHTML(text)
+    console.log(doc)
+    const imgs = doc.querySelectorAll('img') || []
+
+    for (let img of imgs) {
+        const imgIndex = img.getAttribute('recindex')
+
+        if (imgIndex) {
+            img.src = images[Number.parseInt(imgIndex, 10) - 1]
+        }
+    }
+
+    return doc.body.innerHTML as string
+}
+
 export async function parse(rawContent: File): Promise<Book> {
     const result = await readFileContent(rawContent)
     let entries: BookContentEntry[]
+    images = []
 
     if (result.isOK) {
         mobi = new MobiFile()
         dataView = new DataView(result.content as ArrayBuffer)
-        const content = parseMobiFile()
+        const content = fixImage(parseMobiFile())
 
         entries = [
             {
