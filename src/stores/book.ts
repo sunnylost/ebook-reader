@@ -28,7 +28,9 @@ export const [bookState, updateBookState] = createStore<BookStore>({
     currentPageNum: 0,
 
     get hasNextPage() {
-        return this.currentPageNum < this.totalPageNum
+        return (
+            this.currentPageNum < this.totalPageNum && this.totalPageNum !== 1
+        )
     },
 
     get hasPrevPage() {

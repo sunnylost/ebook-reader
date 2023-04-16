@@ -10,7 +10,7 @@ export function Reader() {
         <div class="relative">
             <Book book={bookState.currentOpenedBook}></Book>
             <Show when={readerState.isShowTools}>
-                <div class="absolute top-0 left-0">
+                <div class="absolute top-0 left-0 w-full">
                     <Top></Top>
                     <Nav></Nav>
                 </div>

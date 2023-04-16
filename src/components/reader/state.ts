@@ -1,7 +1,7 @@
 import { createStore } from 'solid-js/store'
 
 export const [readerState, updateReaderState] = createStore({
-    isShowTools: false,
+    isShowTools: true,
 })
 
 export function toggleToolsVisibility() {

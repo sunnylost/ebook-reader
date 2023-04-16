@@ -59,7 +59,7 @@ export function Mode() {
                 ></Dynamic>
             </div>
             <Show when={isShow()}>
-                <ul class="absolute top-24 right-0 bg-dark-bg text-dark-text dark:bg-bg dark:text-text rounded">
+                <ul class="absolute top-24 right-0 bg-dark-bg text-dark-text dark:bg-bg dark:text-text rounded border overflow-hidden">
                     <For each={Object.values(ModeList)}>
                         {(item) => (
                             <li

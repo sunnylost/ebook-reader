@@ -1,8 +1,9 @@
 import { createEffect, createSignal, Show } from 'solid-js'
 import { getTocState } from '@/stores'
-import { jumpToPage } from '@/stores/book'
+import { bookState, jumpToPage } from '@/stores/book'
+import { Portal } from 'solid-js/web'
 
-export function Toc(props: { content: string }) {
+export function TocPanel() {
     const [isVisible, updateVisible] = createSignal(false)
 
     createEffect(() => {
@@ -45,12 +46,14 @@ export function Toc(props: { content: string }) {
     }
 
     return (
-        <Show when={isVisible()}>
-            <div
-                class="fixed left-[calc(50vw_-_510px)] top-0 px-36 py-12 w-1/3 bg-bg rounded"
-                onClick={handleClick}
-                innerHTML={props.content}
-            ></div>
-        </Show>
+        <Portal>
+            <Show when={isVisible()}>
+                <div
+                    class="fixed left-[calc(50vw_-_510px)] top-0 px-36 py-12 w-1/3 bg-bg rounded"
+                    onClick={handleClick}
+                    innerHTML={bookState.currentOpenedBook?.toc}
+                ></div>
+            </Show>
+        </Portal>
     )
 }

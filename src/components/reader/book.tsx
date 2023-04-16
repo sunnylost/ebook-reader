@@ -1,7 +1,5 @@
 import { Match, Show, Switch } from 'solid-js'
 import { bookState } from '@/stores/book'
-import { FloatToolBar } from '../float-toolbar'
-import { Toc } from '../toc'
 import { toggleToolsVisibility } from './state'
 import { Book as BookType } from '@/types'
 
@@ -9,7 +7,7 @@ import { Book as BookType } from '@/types'
 export function Book(props: { book: BookType | null }) {
     return (
         <div
-            class="book relative w-[80vw] h-[90vh] m-auto px-10 bg-[#1e1818] text-white overflow-auto"
+            class="book relative w-[80vw] h-[90vh] m-auto px-10 bg-bg text-text dark:bg-dark-bg dark:text-dark-text overflow-auto"
             onClick={() => toggleToolsVisibility()}
         >
             <Show when={bookState.currentPageContent}>
@@ -43,8 +41,6 @@ export function Book(props: { book: BookType | null }) {
                         </Switch>
                     </div>
                 </div>
-                <Toc content={props.book?.toc}></Toc>
-                <FloatToolBar></FloatToolBar>
             </Show>
         </div>
     )
