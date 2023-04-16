@@ -62,8 +62,12 @@ export type MobiHeader = {
     lastContentRecordNumber: number
     flisRecordNumber: number
     unknownFlisRecordCount: number
+    fcisRecordNumber: number
+    unknownFcisRecordCount: number
     firstCompilationDataSectionCount: number
     numberOfCompilationDataSections: number
     extraRecordDataFlags: number
     indxRecordOffset: number
 }
+
+export type EXTHHeader = {}
