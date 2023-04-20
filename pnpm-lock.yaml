@@ -8,8 +8,8 @@ importers:
         specifier: ^0.8.2
         version: 0.8.2(solid-js@1.7.3)
       '@zip.js/zip.js':
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^2.7.6
+        version: 2.7.6
       pdfjs-dist:
         specifier: ^3.5.141
         version: 3.5.141
@@ -24,35 +24,35 @@ importers:
         version: 3.0.2
     devDependencies:
       '@types/node':
-        specifier: ^18.15.11
-        version: 18.15.11
+        specifier: ^18.15.12
+        version: 18.15.12
       autoprefixer:
         specifier: ^10.4.14
-        version: 10.4.14(postcss@8.4.21)
+        version: 10.4.14(postcss@8.4.23)
       eslint:
         specifier: ^8.38.0
         version: 8.38.0
       postcss:
-        specifier: ^8.4.21
-        version: 8.4.21
+        specifier: ^8.4.23
+        version: 8.4.23
       prettier:
         specifier: ^2.8.7
         version: 2.8.7
       solid-devtools:
         specifier: ^0.26.0
-        version: 0.26.0(@solidjs/meta@0.28.3)(@solidjs/router@0.8.2)(solid-js@1.7.3)(vite@4.2.1)
+        version: 0.26.0(@solidjs/meta@0.28.3)(@solidjs/router@0.8.2)(solid-js@1.7.3)(vite@4.3.0)
       tailwindcss:
         specifier: ^3.3.1
-        version: 3.3.1(postcss@8.4.21)
+        version: 3.3.1(postcss@8.4.23)
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
       vite:
-        specifier: ^4.2.1
-        version: 4.2.1(@types/node@18.15.11)
+        specifier: ^4.3.0
+        version: 4.3.0(@types/node@18.15.12)
       vite-plugin-solid:
         specifier: ^2.7.0
-        version: 2.7.0(solid-js@1.7.3)(vite@4.2.1)
+        version: 2.7.0(solid-js@1.7.3)(vite@4.3.0)
 
   packages/ebook-parser: {}
 
@@ -1847,7 +1847,7 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/pluginutils@5.0.2(rollup@3.17.2):
+  /@rollup/pluginutils@5.0.2(rollup@3.20.2):
     resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -1859,7 +1859,7 @@ packages:
       '@types/estree': 1.0.0
       estree-walker: 2.0.2
       picomatch: 2.3.1
-      rollup: 3.17.2
+      rollup: 3.20.2
     dev: true
     optional: true
 
@@ -2165,12 +2165,12 @@ packages:
     dev: true
     optional: true
 
-  /@types/node@18.15.11:
-    resolution: {integrity: sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==}
+  /@types/node@18.15.12:
+    resolution: {integrity: sha512-Wha1UwsB3CYdqUm2PPzh/1gujGCNtWVUYF0mB00fJFoR4gTyWTDPjSm+zBF787Ahw8vSGgBja90MkgFwvB86Dg==}
     dev: true
 
-  /@zip.js/zip.js@2.7.1:
-    resolution: {integrity: sha512-Mi7yttBQ3Nzq4Dz71uvwWAY6osr/KxvRCkHLAL3urhjwZTuYJdvXh40zaI+w34SEliMXsrahqGUgqRXzRZD3WQ==}
+  /@zip.js/zip.js@2.7.6:
+    resolution: {integrity: sha512-j9gaYG84Qd3tI3X7BiOpL5bckbbAetpxtpilKnSyW5rMTnrXwH6GtXkL8rEBxnPk100exbfxNlORwFagX7fMfg==}
     engines: {deno: '>=1.0.0', node: '>=16.5.0'}
     dev: false
 
@@ -2273,7 +2273,7 @@ packages:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
     dev: true
 
-  /autoprefixer@10.4.14(postcss@8.4.21):
+  /autoprefixer@10.4.14(postcss@8.4.23):
     resolution: {integrity: sha512-FQzyfOsTlwVzjHxKEqRIAdJx9niO6VCBCoEwax/VLSoQF29ggECcPuBqUMZ+u8jCZOPSy8b8/8KnuFbp0SaFZQ==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
@@ -2285,7 +2285,7 @@ packages:
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
-      postcss: 8.4.21
+      postcss: 8.4.23
       postcss-value-parser: 4.2.0
     dev: true
 
@@ -3660,8 +3660,8 @@ packages:
     dev: false
     optional: true
 
-  /nanoid@3.3.4:
-    resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
+  /nanoid@3.3.6:
+    resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
     dev: true
@@ -3859,29 +3859,29 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /postcss-import@14.1.0(postcss@8.4.21):
+  /postcss-import@14.1.0(postcss@8.4.23):
     resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       postcss: ^8.0.0
     dependencies:
-      postcss: 8.4.21
+      postcss: 8.4.23
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.1
     dev: true
 
-  /postcss-js@4.0.0(postcss@8.4.21):
+  /postcss-js@4.0.0(postcss@8.4.23):
     resolution: {integrity: sha512-77QESFBwgX4irogGVPgQ5s07vLvFqWr228qZY+w6lW599cRlK/HmnlivnnVUxkjHnCu4J16PDMHcH+e+2HbvTQ==}
     engines: {node: ^12 || ^14 || >= 16}
     peerDependencies:
       postcss: ^8.3.3
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.21
+      postcss: 8.4.23
     dev: true
 
-  /postcss-load-config@3.1.4(postcss@8.4.21):
+  /postcss-load-config@3.1.4(postcss@8.4.23):
     resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
     engines: {node: '>= 10'}
     peerDependencies:
@@ -3894,17 +3894,17 @@ packages:
         optional: true
     dependencies:
       lilconfig: 2.0.6
-      postcss: 8.4.21
+      postcss: 8.4.23
       yaml: 1.10.2
     dev: true
 
-  /postcss-nested@6.0.0(postcss@8.4.21):
+  /postcss-nested@6.0.0(postcss@8.4.23):
     resolution: {integrity: sha512-0DkamqrPcmkBDsLn+vQDIrtkSbNkv5AD/M322ySo9kqFkCIYklym2xEmWkwo+Y3/qZo34tzEPNUw4y7yMCdv5w==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
     dependencies:
-      postcss: 8.4.21
+      postcss: 8.4.23
       postcss-selector-parser: 6.0.11
     dev: true
 
@@ -3920,11 +3920,11 @@ packages:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
     dev: true
 
-  /postcss@8.4.21:
-    resolution: {integrity: sha512-tP7u/Sn/dVxK2NnruI4H9BG+x+Wxz6oeZ1cJ8P6G/PZY0IKk4k/63TDsQf2kQq3+qoJeLm2kIBUNlZe3zgb4Zg==}
+  /postcss@8.4.23:
+    resolution: {integrity: sha512-bQ3qMcpF6A/YjR55xtoTr0jGOlnPOKAIMdOWiv0EIT6HVPEaJiJB4NLljSbiHoC2RX7DN5Uvjtpbg1NPdwv1oA==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
-      nanoid: 3.3.4
+      nanoid: 3.3.6
       picocolors: 1.0.0
       source-map-js: 1.0.2
     dev: true
@@ -4054,7 +4054,7 @@ packages:
     dependencies:
       glob: 7.2.3
 
-  /rollup-plugin-visualizer@5.9.0(rollup@3.17.2):
+  /rollup-plugin-visualizer@5.9.0(rollup@3.20.2):
     resolution: {integrity: sha512-bbDOv47+Bw4C/cgs0czZqfm8L82xOZssk4ayZjG40y9zbXclNk7YikrZTDao6p7+HDiGxrN0b65SgZiVm9k1Cg==}
     engines: {node: '>=14'}
     hasBin: true
@@ -4066,29 +4066,20 @@ packages:
     dependencies:
       open: 8.4.2
       picomatch: 2.3.1
-      rollup: 3.17.2
+      rollup: 3.20.2
       source-map: 0.7.4
       yargs: 17.7.0
     dev: true
     optional: true
 
-  /rollup-route-manifest@1.0.0(rollup@3.17.2):
+  /rollup-route-manifest@1.0.0(rollup@3.20.2):
     resolution: {integrity: sha512-3CmcMmCLAzJDUXiO3z6386/Pt8/k9xTZv8gIHyXI8hYGoAInnYdOsFXiGGzQRMy6TXR1jUZme2qbdwjH2nFMjg==}
     engines: {node: '>=8'}
     peerDependencies:
       rollup: '>=2.0.0'
     dependencies:
-      rollup: 3.17.2
+      rollup: 3.20.2
       route-sort: 1.0.0
-    dev: true
-    optional: true
-
-  /rollup@3.17.2:
-    resolution: {integrity: sha512-qMNZdlQPCkWodrAZ3qnJtvCAl4vpQ8q77uEujVCCbC/6CLB7Lcmvjq7HyiOSnf4fxTT9XgsE36oLHJBH49xjqA==}
-    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
-    hasBin: true
-    optionalDependencies:
-      fsevents: 2.3.2
     dev: true
     optional: true
 
@@ -4205,7 +4196,7 @@ packages:
     dev: true
     optional: true
 
-  /solid-devtools@0.26.0(@solidjs/meta@0.28.3)(@solidjs/router@0.8.2)(solid-js@1.7.3)(vite@4.2.1):
+  /solid-devtools@0.26.0(@solidjs/meta@0.28.3)(@solidjs/router@0.8.2)(solid-js@1.7.3)(vite@4.3.0):
     resolution: {integrity: sha512-YNvdOj2SsAzArmclh5cdCPQNZlDaYp8TsYQWftCGEA7eQ0UJ2dfz+IDEw7KkW6d44tyfd5iUgjDeoht0+B5klA==}
     peerDependencies:
       solid-js: ^1.6.9
@@ -4220,9 +4211,9 @@ packages:
       '@solid-primitives/utils': 5.2.0(solid-js@1.7.3)
       solid-js: 1.7.3
       type-fest: 3.6.0
-      vite: 4.2.1(@types/node@18.15.11)
+      vite: 4.3.0(@types/node@18.15.12)
     optionalDependencies:
-      solid-start: 0.2.21(@solidjs/meta@0.28.3)(@solidjs/router@0.8.2)(solid-js@1.7.3)(vite@4.2.1)
+      solid-start: 0.2.21(@solidjs/meta@0.28.3)(@solidjs/router@0.8.2)(solid-js@1.7.3)(vite@4.3.0)
     transitivePeerDependencies:
       - '@solidjs/meta'
       - '@solidjs/router'
@@ -4263,7 +4254,7 @@ packages:
       solid-js: 1.7.3
     dev: true
 
-  /solid-start@0.2.21(@solidjs/meta@0.28.3)(@solidjs/router@0.8.2)(solid-js@1.7.3)(vite@4.2.1):
+  /solid-start@0.2.21(@solidjs/meta@0.28.3)(@solidjs/router@0.8.2)(solid-js@1.7.3)(vite@4.3.0):
     resolution: {integrity: sha512-igh1vI6d8sBm9BeGGcJOE7ewEOSlhzmL3f4iVX0bg5oz+9xtqAf1EA0MvNkTLTvq5YKsVKYy80oJmm/xg0F8jw==}
     hasBin: true
     requiresBuild: true
@@ -4320,18 +4311,18 @@ packages:
       get-port: 6.1.2
       parse-multipart-data: 1.5.0
       picocolors: 1.0.0
-      rollup: 3.17.2
-      rollup-plugin-visualizer: 5.9.0(rollup@3.17.2)
-      rollup-route-manifest: 1.0.0(rollup@3.17.2)
+      rollup: 3.20.2
+      rollup-plugin-visualizer: 5.9.0(rollup@3.20.2)
+      rollup-route-manifest: 1.0.0(rollup@3.20.2)
       sade: 1.8.1
       set-cookie-parser: 2.5.1
       sirv: 2.0.2
       solid-js: 1.7.3
       terser: 5.16.4
       undici: 5.20.0
-      vite: 4.2.1(@types/node@18.15.11)
-      vite-plugin-inspect: 0.7.15(rollup@3.17.2)(vite@4.2.1)
-      vite-plugin-solid: 2.7.0(solid-js@1.7.3)(vite@4.2.1)
+      vite: 4.3.0(@types/node@18.15.12)
+      vite-plugin-inspect: 0.7.15(rollup@3.20.2)(vite@4.3.0)
+      vite-plugin-solid: 2.7.0(solid-js@1.7.3)(vite@4.3.0)
       wait-on: 6.0.1(debug@4.3.4)
     transitivePeerDependencies:
       - supports-color
@@ -4438,7 +4429,7 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /tailwindcss@3.3.1(postcss@8.4.21):
+  /tailwindcss@3.3.1(postcss@8.4.23):
     resolution: {integrity: sha512-Vkiouc41d4CEq0ujXl6oiGFQ7bA3WEhUZdTgXAhtKxSy49OmKs8rEfQmupsfF0IGW8fv2iQkp1EVUuapCFrZ9g==}
     engines: {node: '>=12.13.0'}
     hasBin: true
@@ -4459,11 +4450,11 @@ packages:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.0
-      postcss: 8.4.21
-      postcss-import: 14.1.0(postcss@8.4.21)
-      postcss-js: 4.0.0(postcss@8.4.21)
-      postcss-load-config: 3.1.4(postcss@8.4.21)
-      postcss-nested: 6.0.0(postcss@8.4.21)
+      postcss: 8.4.23
+      postcss-import: 14.1.0(postcss@8.4.23)
+      postcss-js: 4.0.0(postcss@8.4.23)
+      postcss-load-config: 3.1.4(postcss@8.4.23)
+      postcss-nested: 6.0.0(postcss@8.4.23)
       postcss-selector-parser: 6.0.11
       postcss-value-parser: 4.2.0
       quick-lru: 5.1.1
@@ -4658,27 +4649,27 @@ packages:
     dev: true
     optional: true
 
-  /vite-plugin-inspect@0.7.15(rollup@3.17.2)(vite@4.2.1):
+  /vite-plugin-inspect@0.7.15(rollup@3.20.2)(vite@4.3.0):
     resolution: {integrity: sha512-oxeZCljacA/slhGFbDNlBqdhDU9fgdHL84i7Nz7DnaAIE7DhTiW2djanw3d/BKuZtduKUY82vRUQ4iaG917t2A==}
     engines: {node: '>=14'}
     peerDependencies:
       vite: ^3.1.0 || ^4.0.0
     dependencies:
       '@antfu/utils': 0.7.2
-      '@rollup/pluginutils': 5.0.2(rollup@3.17.2)
+      '@rollup/pluginutils': 5.0.2(rollup@3.20.2)
       debug: 4.3.4
       fs-extra: 11.1.0
       kolorist: 1.7.0
       sirv: 2.0.2
       ufo: 1.1.0
-      vite: 4.2.1(@types/node@18.15.11)
+      vite: 4.3.0(@types/node@18.15.12)
     transitivePeerDependencies:
       - rollup
       - supports-color
     dev: true
     optional: true
 
-  /vite-plugin-solid@2.7.0(solid-js@1.7.3)(vite@4.2.1):
+  /vite-plugin-solid@2.7.0(solid-js@1.7.3)(vite@4.3.0):
     resolution: {integrity: sha512-avp/Jl5zOp/Itfo67xtDB2O61U7idviaIp4mLsjhCa13PjKNasz+IID0jYTyqUp9SFx6/PmBr6v4KgDppqompg==}
     peerDependencies:
       solid-js: ^1.7.2
@@ -4691,14 +4682,14 @@ packages:
       merge-anything: 5.1.4
       solid-js: 1.7.3
       solid-refresh: 0.5.2(solid-js@1.7.3)
-      vite: 4.2.1(@types/node@18.15.11)
-      vitefu: 0.2.3(vite@4.2.1)
+      vite: 4.3.0(@types/node@18.15.12)
+      vitefu: 0.2.3(vite@4.3.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /vite@4.2.1(@types/node@18.15.11):
-    resolution: {integrity: sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==}
+  /vite@4.3.0(@types/node@18.15.12):
+    resolution: {integrity: sha512-JTGFgDh3dVxeGBpuQX04Up+JZmuG6wu9414Ei36vQzaEruY/M4K0AgwtuB2b4HaBgB7R8l+LHxjB0jcgz4d2qQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -4722,16 +4713,15 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.15.11
+      '@types/node': 18.15.12
       esbuild: 0.17.12
-      postcss: 8.4.21
-      resolve: 1.22.1
+      postcss: 8.4.23
       rollup: 3.20.2
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
 
-  /vitefu@0.2.3(vite@4.2.1):
+  /vitefu@0.2.3(vite@4.3.0):
     resolution: {integrity: sha512-75l7TTuU8isAhz1QFtNKjDkqjxvndfMC1AfIMjJ0ZQ59ZD0Ow9QOIsJJX16Wv9PS8f+zMzp6fHy5cCbKG/yVUQ==}
     peerDependencies:
       vite: ^3.0.0 || ^4.0.0
@@ -4739,7 +4729,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 4.2.1(@types/node@18.15.11)
+      vite: 4.3.0(@types/node@18.15.12)
     dev: true
 
   /wait-on@6.0.1(debug@4.3.4):
