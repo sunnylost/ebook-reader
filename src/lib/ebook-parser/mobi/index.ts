@@ -7,7 +7,7 @@ import type { Book, BookContentEntry } from '@/types'
 import { PDBHeader, PalmHeader, MobiHeader, EXTHHeader } from './types'
 import { BookContentTypes } from '@/types'
 import { readFileContent } from '@/utils'
-import { parseHTML, parseXML } from '@/lib/util'
+import { parseHTML, parseXML } from '@/lib/ebook-parser/util'
 
 class MobiFile {
     pdbHeader: PDBHeader
@@ -267,14 +267,134 @@ function parseExthHeader() {
     jumpTo(_offset + headerLength)
 }
 
+const FLAG_MULTIBYTE_OVERLAP = 0x0001
+
+function readTrailingEntry(bytes: Uint8Array, flags: number) {
+    let entry = {}
+
+    if (flags & FLAG_MULTIBYTE_OVERLAP) {
+        // Read multibyte character overlap entry
+        entry.type = 'multibyteOverlap'
+        entry.data = bytes.slice(0, 4)
+        entry.sizeAndFlags = bytes.slice(4, 5)
+        // bytes = bytes.slice(0, bytes.length - 5)
+    } else {
+        // Other trailing entries are currently unknown
+        entry.type = 'unknown'
+        entry.data = bytes
+        entry.sizeAndFlags = null
+        bytes = []
+    }
+
+    return { entry, remainingBytes: bytes }
+}
+
+function decodeVariableWidthInteger(bytes) {
+    let value = 0
+    let shift = 0
+    console.log(bytes)
+
+    for (let i = bytes.length - 1; i >= 0; i--) {
+        const byte = bytes[i]
+        value += (byte & 0x7f) << shift
+        shift += 7
+        if ((byte & 0x80) === 0) {
+            break
+        }
+    }
+
+    return value
+}
+
+function get_record_extrasize(data, flags) {
+    if (flags & FLAG_MULTIBYTE_OVERLAP) {
+        let offset = data.length - 1
+        let size = 0
+        let shift = 0
+        while (true) {
+            const byte = data[offset]
+            size |= (byte & 0x7f) << shift
+            shift += 7
+            if ((byte & 0x80) === 0) {
+                break
+            }
+            offset--
+        }
+        // return the overlapping bytes
+        const overlapSize = size & 0x03 // bits 1-2 encode N
+        const overlapOffset = data.length - overlapSize - size - 1
+        return overlapSize
+    } else {
+        return 0
+    }
+    // var pos = data.length - 1
+    // var extra = 0
+    // for (var i = 15; i > 0; i--) {
+    //     if (flags & (1 << i)) {
+    //         var res = buffer_get_varlen(data, pos)
+    //         var size = res[0]
+    //         var l = res[1]
+    //         pos = res[2]
+    //         pos -= size - l
+    //         extra += size
+    //     }
+    // }
+    // if (flags & 1) {
+    //     var a = data[pos]
+    //     extra += (a & 0x3) + 1
+    // }
+    // return extra
+}
+
+// data should be uint8array
+function buffer_get_varlen(data, pos) {
+    var l = 0
+    var size = 0
+    var byte_count = 0
+    var mask = 0x7f
+    var stop_flag = 0x80
+    var shift = 0
+    for (var i = 0; ; i++) {
+        var byte = data[pos]
+        size |= (byte & mask) << shift
+        shift += 7
+        l += 1
+        byte_count += 1
+        pos -= 1
+
+        var to_stop = byte & stop_flag
+        if (byte_count >= 4 || to_stop > 0) {
+            break
+        }
+    }
+    return [size, l, pos]
+}
+
 function parseRecords() {
     const { header, palmHeader, records } = mobi
     const text: Uint8Array[] = []
     let totalLength = 0
-    for (let i = 1; i <= palmHeader.recordCount; i++) {
+    for (
+        let i = header.firstContentRecordNumber;
+        i <= palmHeader.recordCount;
+        i++
+    ) {
         const begin = records[i].offset
         const end = records[i + 1].offset
-        const data = new Uint8Array(dataView.buffer.slice(begin, end))
+        let data = new Uint8Array(dataView.buffer.slice(begin, end))
+
+        // const { remainingBytes } = readTrailingEntry(
+        //     data,
+        //     header.extraRecordDataFlags
+        // )
+        const extra = get_record_extrasize(data, header.extraRecordDataFlags)
+        console.log('extra', extra)
+        data = new Uint8Array(dataView.buffer.slice(begin, end - extra))
+        // console.log(
+        //     'trailing entry',
+        //     remainingBytes.length,
+        //     get_record_extrasize(data, header.extraRecordDataFlags)
+        // )
 
         if (palmHeader.compression === 2) {
             let result = lz77Decompress(data)

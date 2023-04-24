@@ -1,5 +1,5 @@
 import { createStore } from 'solid-js/store'
-import { parseBook } from '@/lib'
+import { parseBook } from '@/lib/ebook-parser'
 import type { Book, BookContentEntry } from '@/types'
 
 export const BOOK_STATUS = {
