@@ -49,7 +49,7 @@ export const [bookState, updateBookState] = createStore<BookStore>({
             return this.currentChapterNumber < this.totalChapterNumber
         },
         get hasPrevChapter() {
-            return this.currentChapterNumber > 0
+            return this.currentChapterNumber > 1
         },
     },
     pageNumber: {
@@ -239,4 +239,16 @@ function updatePagePosition(pageNum: number) {
 
 createEffect(() => {
     updatePagePosition(bookState.chapterNumber.currentChapterNumber)
+})
+
+document.body.addEventListener('keyup', (e) => {
+    if (bookState.status !== BOOK_STATUS.done) {
+        return
+    }
+
+    if (e.key === 'ArrowRight') {
+        nextPage()
+    } else if (e.key === 'ArrowLeft') {
+        prevPage()
+    }
 })
