@@ -1,7 +1,7 @@
 import { Show } from 'solid-js'
 import { bookState, nextPage, prevPage } from '@/stores/book'
 import { Button } from '@/components/button'
-import { RiSystemArrowLeftSLine, RiSystemArrowRightSLine } from 'solid-icons/ri'
+import { BiRegularLeftArrowAlt, BiRegularRightArrowAlt } from 'solid-icons/bi'
 
 export function Nav() {
     return (
@@ -12,7 +12,7 @@ export function Nav() {
                     onClick={() => prevPage()}
                     tooltip="Prev Page"
                 >
-                    <RiSystemArrowLeftSLine />
+                    <BiRegularLeftArrowAlt />
                 </Button>
             </Show>
 
@@ -22,7 +22,7 @@ export function Nav() {
                     onClick={() => nextPage()}
                     tooltip="Next Page"
                 >
-                    <RiSystemArrowRightSLine />
+                    <BiRegularRightArrowAlt />
                 </Button>
             </Show>
         </>

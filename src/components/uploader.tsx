@@ -1,6 +1,6 @@
 import { createEffect } from 'solid-js'
 import { FaSolidUpload } from 'solid-icons/fa'
-import { useDragAndDrop } from '@/components/useDragAndDrop'
+import { useDragAndDrop } from '@/hooks/useDragAndDrop'
 
 const uploaderID = 'upload-input'
 let dragAreaRef: HTMLDivElement

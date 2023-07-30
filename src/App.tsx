@@ -1,11 +1,7 @@
 import { Match, Show, Switch } from 'solid-js'
-import { Uploader } from '@/components/uploader'
-import { Reader } from '@/components/reader'
-import { TopBar } from '@/components/top-bar'
-import { Alert } from '@/components/alert'
+import { Alert, LoadingStatus, Reader, TopBar, Uploader } from '@/components'
 import { openBook, bookState, BOOK_STATUS, resetBookState } from '@/stores/book'
-import { DragAndDropContextProvider } from './components/useDragAndDrop'
-import { LoadingStatus } from '@/components/loading-status'
+import { DragAndDropContextProvider } from './hooks/useDragAndDrop'
 
 export default function App() {
     return (

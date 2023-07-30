@@ -49,7 +49,7 @@ export function TocPanel() {
         <Portal>
             <Show when={isVisible()}>
                 <div
-                    class="fixed left-[calc(50vw_-_510px)] top-0 px-36 py-12 w-1/3 bg-bg rounded"
+                    class="fixed left-[15vw] top-0 px-36 py-12 w-fit bg-bg rounded shadow"
                     onClick={handleClick}
                     innerHTML={bookState.currentOpenedBook?.toc}
                 ></div>
