@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import type { JSX } from 'solid-js'
+import * as PdfJsLibType from 'pdfjs-dist'
 
 declare module 'solid-js' {
     namespace JSX {
@@ -8,4 +8,8 @@ declare module 'solid-js' {
             clickOutside: () => void
         }
     }
+}
+
+declare global {
+    const pdfjsLib: PdfJsLibType
 }
