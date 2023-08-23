@@ -4,9 +4,9 @@ import { Nav } from './nav'
 
 export function Reader() {
     return (
-        <div class="relative">
+        <div class="relative mt-20">
             <Book></Book>
-            <div class="absolute top-0 left-0 w-full">
+            <div class="absolute top-0 left-0">
                 <Top></Top>
                 <Nav></Nav>
             </div>
