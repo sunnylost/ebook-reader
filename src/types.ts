@@ -1,3 +1,5 @@
+import { PDFDocumentProxy } from 'pdfjs-dist'
+
 export interface BookToc {}
 
 export const BookContentTypes = {
@@ -27,6 +29,7 @@ export interface Book {
     pages: BookPageItem[]
     resources: BookResourceMap
     entries: BookContentEntry[]
+    pdf?: PDFDocumentProxy
 }
 
 export interface BookStore {

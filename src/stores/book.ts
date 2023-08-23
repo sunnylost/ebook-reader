@@ -74,7 +74,24 @@ export const [bookState, updateBookState] = createStore<BookStore>({
         return this.chapterNumber.hasPrevChapter || this.currentPageNum > 0
     },
 
-    get currentPageContent() {
+    // get currentPageContent() {
+    //     return this.currentOpenedBook?.entries[this.currentPageNum]
+    // },
+
+    async getCurrentPageContent() {
+        if (this.currentOpenedBook.pdf) {
+            const page = await this.currentOpenedBook.pdf.getPage(
+                this.currentPageNum + 1
+            )
+            const content = await page.getTextContent()
+            return {
+                type: 'html',
+                content: content.items
+                    .map((_item) => `<p>${_item.str}</p>`)
+                    .join(''),
+            }
+        }
+
         return this.currentOpenedBook?.entries[this.currentPageNum]
     },
 })
@@ -87,10 +104,11 @@ export async function openBook(file: File) {
         // const bookId = await generateFileUrl(uploadFile)
 
         const book = await parseBook(file.name, file)
+
         updateBookState({
             status: BOOK_STATUS.done,
             currentPageNum: 0,
-            totalPageNum: book.entries.length,
+            totalPageNum: book.pdf ? book.pdf.numPages : book.entries.length,
             currentOpenedBook: book,
         })
         setTimeout(() => {

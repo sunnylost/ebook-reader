@@ -1,6 +1,7 @@
 import type { Book } from '@/types'
 import { parse as parseEpub } from './epub'
 import { parse as parseMobi } from './mobi'
+import { parse as parsePdf } from './pdf'
 import { parse as parseTxt } from './txt'
 
 const handler: {
@@ -8,6 +9,7 @@ const handler: {
 } = {
     '.epub': parseEpub,
     '.mobi': parseMobi,
+    '.pdf': parsePdf,
     '.txt': parseTxt,
 }
 
