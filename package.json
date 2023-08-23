@@ -22,23 +22,23 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@solidjs/router": "^0.8.2",
-        "@zip.js/zip.js": "^2.7.20",
+        "@solidjs/router": "^0.8.3",
+        "@zip.js/zip.js": "^2.7.24",
         "pdfjs-dist": "^3.9.179",
         "solid-icons": "^1.0.11",
-        "solid-js": "^1.7.8",
+        "solid-js": "^1.7.11",
         "spark-md5": "^3.0.2"
     },
     "devDependencies": {
-        "@types/node": "^20.4.5",
-        "autoprefixer": "^10.4.14",
-        "eslint": "^8.46.0",
-        "postcss": "^8.4.27",
-        "prettier": "^3.0.0",
-        "solid-devtools": "^0.27.6",
+        "@types/node": "^20.5.3",
+        "autoprefixer": "^10.4.15",
+        "eslint": "^8.47.0",
+        "postcss": "^8.4.28",
+        "prettier": "^3.0.2",
+        "solid-devtools": "^0.27.7",
         "tailwindcss": "^3.3.3",
         "typescript": "^5.1.6",
-        "vite": "^4.4.7",
+        "vite": "^4.4.9",
         "vite-plugin-solid": "^2.7.0"
     }
 }
