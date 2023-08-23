@@ -206,7 +206,11 @@ function calculateChapterPages() {
 
 let bookContainerObserver: ResizeObserver | null
 let currentContainerDiv: HTMLElement
-export function initBookContainer(container: HTMLElement) {
+export function initBookContainer(container?: HTMLElement) {
+    if (!container) {
+        return
+    }
+
     bookContainerObserver = new ResizeObserver(() => {
         console.log('book resize')
         currentContainerDiv = container
